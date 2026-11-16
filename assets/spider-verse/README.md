@@ -6,16 +6,16 @@ an image is in place, add its exact filename to the `available` array in
 `artwork.json`. The app only requests images listed there, so missing artwork
 does not create broken image requests.
 
-- `miles-morales.png`
-- `gwen-stacy.png`
-- `hobie-brown.png`
-- `peter-b-parker.png`
-- `miguel-ohara.png`
-- `spider-man-noir.png`
-- `peni-parker.png`
-- `spider-ham.png`
+- `miles-morales.avif`
+- `gwen-stacy.jpg`
+- `hobie-brown.jpg`
+- `peter-b-parker.jpg`
+- `miguel-ohara.jpg`
+- `spider-man-noir.jpg`
+- `peni-parker.jpg`
+- `spider-ham.jpg`
 
-Use transparent-background PNG renders where possible, with consistent
+Use transparent-background images where possible, with consistent
 portrait proportions and enough resolution for a large result-page display.
 Only add artwork that you have permission to distribute, such as commissioned
 or original illustrations, or artwork with a license that permits reuse. Do not
