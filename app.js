@@ -99,7 +99,21 @@ async function dl(){
         image.addEventListener("error",()=>reject(new Error(`Image failed to load: ${image.alt||image.src}`)),{once:true});
       });
     }));
-    const canvas=await html2canvas(cardElement,{scale:3,backgroundColor:"#090c14",useCORS:false,logging:false});
+    const canvas=await html2canvas(cardElement,{
+      scale:3,
+      backgroundColor:"#090c14",
+      useCORS:false,
+      logging:false,
+      windowWidth:700,
+      onclone:clonedDocument=>{
+        const exportCard=clonedDocument.querySelector("#card");
+        exportCard.style.width="500px";
+        exportCard.style.maxWidth="500px";
+        exportCard.style.margin="0";
+        exportCard.style.padding="20px";
+        exportCard.style.boxSizing="border-box";
+      }
+    });
     const link=document.createElement("a");link.download=`alterego-${R.universeCode}.png`;link.href=canvas.toDataURL("image/png");link.click();
     status.textContent="Your character card is ready to share.";
   }catch(error){console.error("Character card export failed:",error);status.textContent="Could not create the card image. Check that the selected photos and local artwork load, then try again."}
