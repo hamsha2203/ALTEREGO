@@ -7,7 +7,7 @@ Participant uploads accept JPG, PNG, or WEBP up to 10 MB and remain in the brows
 
 ## Independent scoring engines
 - **A · EB resonance**: answers → 8 dims (A,P,C,E,S,I,D,M) scaled 0-10 → centered cosine vs `EB[].v`. EB vectors were hand-coded from the ACE sheet (edit `v` to tune). Uses NO dept data.
-- **B · Department**: answers → 6 JD competencies (S,L,D,K,O,R) → cosine vs `DEPT[].v` (from JD booklets). Uses NO EB data. 2nd dept shown if within 8 pts.
+- **B · Department**: answers → 6 JD competencies (S,L,D,K,O,R) → cosine vs `DEPT[].v` (from JD booklets). Uses NO EB data. A small random tie-break (up to 4 points either way) varies close department matches between quiz runs; the displayed percentage remains the underlying score. 2nd dept shown if within 8 pts.
 - **C · Archetype**: tally of C/A/N/V/W per answer.
 - **D · Spider-Verse identity**: independent profile weights in `spiderverse.js`, based on the selected answer's existing EB-dimension and archetype signals. Does not change the question set or other scores.
 Each option in `Q` = `text|EBdims|DEPTdims|ARCH` — separate mappings per engine.

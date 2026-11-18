@@ -19,7 +19,7 @@ EBD.forEach(x=>e[x]=10*e[x]/MAXE[x]);Object.keys(d).forEach(x=>d[x]=10*d[x]/MAXD
 // Engine A: EB resonance (EB profiles only)
 const eb=EB.map(m=>({m,s:Math.round((cos(e,m.v)+1)/2*100)})).sort((x,y)=>y.s-x.s);
 // Engine B: dept alignment (JD profiles only)
-const dp=Object.entries(DEPT).map(([k,v])=>{const K=Object.keys(d),dot=K.reduce((s,x)=>s+d[x]*(v.v[x]||0),0),n=Math.sqrt(K.reduce((s,x)=>s+d[x]**2,0)*K.reduce((s,x)=>s+(v.v[x]||0)**2,0));return{k,s:Math.round(n?dot/n*100:0)}}).sort((x,y)=>y.s-x.s);
+const dp=Object.entries(DEPT).map(([k,v])=>{const K=Object.keys(d),dot=K.reduce((s,x)=>s+d[x]*(v.v[x]||0),0),n=Math.sqrt(K.reduce((s,x)=>s+d[x]**2,0)*K.reduce((s,x)=>s+(v.v[x]||0)**2,0)),s=Math.round(n?dot/n*100:0);return{k,s,rank:s+(Math.random()*8-4)}}).sort((x,y)=>y.rank-x.rank);
 // Engine C: archetype (ties -> first answered pattern order)
 const ar=Object.entries(a).sort((x,y)=>y[1]-x[1]);return{e,d,eb,dp,ar}}
 function decode(){show(`<div class="portal spin"></div><h2 class="glitch" data-t="DECODING…">DECODING…</h2><p class="tag">Crossing dimensions to find your ALTEREGO</p>`);setTimeout(reveal,2200)}
@@ -39,7 +39,7 @@ function next(){
   if(step===0){show(resultShell(`<p class="eyebrow">ALTEREGO FILE · IDENTITY UNLOCKED</p><h1 class="glitch big" data-t="${A.t}">${A.t}</h1><p class="tag">${A.s}</p><div class="glass kv"><div><b>Superpower</b>${A.p}</div><div><b>Quirk</b>${A.q}</div><div><b>Growth edge</b>${A.k}</div></div>`));return}
   if(step===1){renderSpiderStage(0);return}
   if(step===2){show(resultShell(`<p class="eyebrow">YOUR EB RESONANCE</p><p class="tag">Your personality counterpart has entered the chat.</p>${av(m)}<h2>${m.name}</h2><p class="eyebrow">${m.port}</p><div class="meter"><i style="width:${R.eb[0].s}%"></i></div><p class="tag">You operate on a similar wavelength${sh.length?' — shared tendencies in <b>'+sh.join(', ')+'</b>':''}. Their style: ${m.tags}.</p><p class="fine">Personality resonance — not a recommendation to work under anyone.</p>`));return}
-  if(step===3){show(resultShell(`<p class="eyebrow">YOUR DEPARTMENT ALIGNMENT</p><p class="tag">Here's where your superpowers might thrive.</p><h1 class="glitch big" data-t="${d.k}">${d.k}</h1><p class="tag">Your strongest alignment appears to be <b>${DEPT[d.k].n}</b> — ${DEPT[d.k].why}.</p><div class="meter"><i style="width:${d.s}%"></i></div>${d2.s>=d.s-8?`<p class="fine">Also close: ${DEPT[d2.k].n}. Potential lives in more than one place.</p>`:''}`));return}
+  if(step===3){show(resultShell(`<p class="eyebrow">YOUR DEPARTMENT ALIGNMENT</p><p class="tag">Here's where your superpowers might thrive.</p><h1 class="glitch big" data-t="${d.k}">${d.k}</h1><p class="tag">One of your close alignments is <b>${DEPT[d.k].n}</b> — ${DEPT[d.k].why}.</p><div class="meter"><i style="width:${d.s}%"></i></div>${d2.s>=d.s-8?`<p class="fine">Also close: ${DEPT[d2.k].n}. Potential lives in more than one place.</p>`:''}`));return}
   show(`<div class="card-result"><p class="eyebrow">YOUR MULTIVERSE CHARACTER FILE</p>${card(A,m,d)}<p id="download-status" class="fine" aria-live="polite"></p><button class="btn" onclick="dl()">DOWNLOAD YOUR CHARACTER CARD</button><button class="ghost" onclick="playAgain()">DISCOVER ANOTHER UNIVERSE</button><p class="fine">An exploratory self-discovery tool, not a psychological test or EB selection.</p>${resultHeader()}<div class="result-nav"><button class="ghost" onclick="moveResult(-1)">← BACK</button><span></span></div></div>`)
 }
 function renderSpiderStage(stage,scanIndex=0,run=spiderRun){
