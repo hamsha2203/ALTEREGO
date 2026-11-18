@@ -144,6 +144,7 @@ h1{text-shadow:3px 3px 0 #1259d6,-3px -2px 0 #ff304f,0 0 36px #317aff88}
 .x{color:#ff596f;text-shadow:0 0 16px #1769ff}
 .cr span{backdrop-filter:blur(12px);border-color:#b9dfff44}
 @media(prefers-reduced-motion:reduce){body{animation:none}.glass,.question-panel,.opt,.btn{animation:none}}
+@media(max-width:480px){.department-match-row{grid-template-columns:42px minmax(0,1fr) 56px 36px;gap:6px;padding:8px;font-size:.68rem}.eb-match-card{gap:9px;padding:9px}.eb-member-copy small{font-size:.64rem}}
 
 /* Multi-page result flow and collectible character reveal. */
 #app{max-width:920px}
@@ -159,6 +160,23 @@ h1{text-shadow:3px 3px 0 #1259d6,-3px -2px 0 #ff304f,0 0 36px #317aff88}
 .result-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:20px auto 0}
 .result-nav .btn{margin:0}.result-nav .ghost{margin:0;padding:12px 4px}
 .result-nav .btn,.spider-page~.result-nav .btn{font-size:.78rem}
+.eb-match-list,.department-match-list{display:grid;gap:9px;margin:14px auto;text-align:left}
+.eb-match-card{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid #ffffff1a;border-radius:12px;background:#ffffff08}
+.eb-match-card .av{width:48px;height:48px;flex:0 0 48px;margin:0}
+.eb-member-copy{min-width:0;flex:1}
+.eb-member-copy>b,.eb-member-copy>span,.eb-member-copy small{display:block}
+.eb-member-copy>b{font-size:.95rem}
+.eb-member-copy>span,.eb-member-copy small{font-size:.7rem;color:var(--sv)}
+.eb-member-copy .eb-match-score{margin-top:3px;color:#d6aab0;letter-spacing:.08em}
+.eb-member-copy p{margin:4px 0;font-size:.78rem}
+.department-match-row,.card-match-row{display:grid;grid-template-columns:minmax(45px,.3fr) minmax(0,1.3fr) minmax(70px,1fr) 42px;align-items:center;gap:9px;padding:9px 11px;border:1px solid #ffffff1a;border-radius:10px;background:#ffffff08;font-size:.78rem}
+.department-match-row>span{color:var(--sv)}
+.department-match-row>i{height:6px;border-radius:8px;background:#ffffff14;overflow:hidden}
+.department-match-row>i em{display:block;height:100%;background:linear-gradient(90deg,#405f96,#789bc1,#c75a68)}
+.department-match-row>strong{text-align:right}
+.card-match-section{margin-top:12px;text-align:left}
+.card-match-section h3{margin:8px 0;font-size:1.15rem!important}
+.card-match-row{grid-template-columns:minmax(0,1fr) auto;padding:5px 8px;font-size:.64rem}
 .spider-page{
   --identity-a:#b84d65;--identity-b:#405f96;
   position:relative;isolation:isolate;width:100%;max-width:790px;margin:0 auto;padding:clamp(20px,5vw,38px);
