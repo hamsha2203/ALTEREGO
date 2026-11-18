@@ -18,9 +18,16 @@ function score(){const e={},d={},a={C:0,A:0,N:0,V:0,W:0};EBD.forEach(x=>e[x]=0);
 st.ans.forEach((k,i)=>{const p=Q[i][1][k].split('|');p[1].split('').forEach(x=>e[x]++);p[2].split('').forEach(x=>d[x]++);a[p[3]]++});
 EBD.forEach(x=>e[x]=10*e[x]/MAXE[x]);Object.keys(d).forEach(x=>d[x]=10*d[x]/MAXD[x]);
 // Engine A: EB resonance (EB profiles only)
-const eb=EB.map(m=>({m,s:Math.round((cos(e,m.v)+1)/2*100)})).sort((x,y)=>y.s-x.s);
+// Rank profiles by how well they match this person's answer pattern relative
+// to the whole profile set. This removes shared baseline scores that otherwise
+// let a few centrally positioned profiles dominate most result sets.
+const rawEB=EB.map(m=>({m,raw:cos(e,m.v)}));
+const lowEB=Math.min(...rawEB.map(x=>x.raw)),highEB=Math.max(...rawEB.map(x=>x.raw));
+const eb=rawEB.map(({m,raw})=>({m,s:Math.round(highEB===lowEB?50:((raw-lowEB)/(highEB-lowEB))*100)})).sort((x,y)=>y.s-x.s);
 // Engine B: dept alignment (JD profiles only)
-const dp=Object.entries(DEPT).map(([k,v])=>{const K=Object.keys(d),dot=K.reduce((s,x)=>s+d[x]*(v.v[x]||0),0),n=Math.sqrt(K.reduce((s,x)=>s+d[x]**2,0)*K.reduce((s,x)=>s+(v.v[x]||0)**2,0)),s=Math.round(n?dot/n*100:0);return{k,s,rank:s+(Math.random()*8-4)}}).sort((x,y)=>y.rank-x.rank);
+const rawDP=Object.entries(DEPT).map(([k,v])=>{const K=Object.keys(d),dot=K.reduce((s,x)=>s+d[x]*(v.v[x]||0),0),n=Math.sqrt(K.reduce((s,x)=>s+d[x]**2,0)*K.reduce((s,x)=>s+(v.v[x]||0)**2,0)),raw=n?dot/n:0;return{k,raw}});
+const lowDP=Math.min(...rawDP.map(x=>x.raw)),highDP=Math.max(...rawDP.map(x=>x.raw));
+const dp=rawDP.map(({k,raw})=>({k,s:Math.round(highDP===lowDP?50:((raw-lowDP)/(highDP-lowDP))*100)})).sort((x,y)=>y.s-x.s);
 // Engine C: archetype (ties -> first answered pattern order)
 const ar=Object.entries(a).sort((x,y)=>y[1]-x[1]);return{e,d,eb,dp,ar}}
 function decode(){show(`<div class="portal spin"></div><h2 class="glitch" data-t="DECODING…">DECODING…</h2><p class="tag">Crossing dimensions to find your ALTEREGO</p>`);setTimeout(reveal,2200)}
