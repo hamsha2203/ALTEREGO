@@ -28,9 +28,11 @@ const eb=rawEB.map(({m,raw})=>({m,s:Math.round(highEB===lowEB?50:((raw-lowEB)/(h
 const rawDP=Object.entries(DEPT).map(([k,v])=>{const K=Object.keys(d),dot=K.reduce((s,x)=>s+d[x]*(v.v[x]||0),0),n=Math.sqrt(K.reduce((s,x)=>s+d[x]**2,0)*K.reduce((s,x)=>s+(v.v[x]||0)**2,0)),raw=n?dot/n:0;return{k,raw}});
 const lowDP=Math.min(...rawDP.map(x=>x.raw)),highDP=Math.max(...rawDP.map(x=>x.raw));
 const rankedDP=rawDP.map(({k,raw})=>({k,s:Math.round(highDP===lowDP?50:((raw-lowDP)/(highDP-lowDP))*100)})).sort((x,y)=>y.s-x.s);
-// The participant's selected department is their primary alignment; show its
-// answer fit score, then rank all other departments by their answer fit.
-const dp=[...rankedDP.filter(x=>x.k===st.dept),...rankedDP.filter(x=>x.k!==st.dept)];
+// The participant's selected department is the primary alignment. Preserve
+// answer-based scores for the other departments, but make the selected one
+// visibly highest so it cannot appear as a low or zero-priority result.
+const selectedDP=rankedDP.find(x=>x.k===st.dept),otherDP=rankedDP.filter(x=>x.k!==st.dept);
+const dp=selectedDP?[{...selectedDP,s:Math.max(selectedDP.s,...otherDP.map(x=>x.s))+1},...otherDP]:rankedDP;
 // Engine C: archetype (ties -> first answered pattern order)
 const ar=Object.entries(a).sort((x,y)=>y[1]-x[1]);return{e,d,eb,dp,ar}}
 function decode(){show(`<div class="portal spin"></div><h2 class="glitch" data-t="DECODING…">DECODING…</h2><p class="tag">Crossing dimensions to find your ALTEREGO</p>`);setTimeout(reveal,2200)}
