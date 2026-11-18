@@ -2,7 +2,7 @@
 Static app (no build). Run: `npx serve .` (don't open via file://) · Deploy: drag folder to Vercel/Netlify.
 
 ## EB photos and participant photo
-The current photos in `assets/eb/` are `hamsha.jpeg`, `munna.jpeg`, `DJ.jpeg`, and `kishan.jpeg`. `Yuvaanesh P` has no photo yet, so initials show for that profile.
+The current photos in `assets/eb/` are `hamsha.jpeg`, `munna.jpeg`, `DJ.jpeg`, `kishan.jpeg`, and `yuva.jpeg` (Yuvaanesh P). Alan Pramod currently has no photo, so initials show for that profile.
 Participant uploads accept JPG, PNG, or WEBP up to 10 MB and remain in the browser.
 
 ## Independent scoring engines
@@ -26,3 +26,4 @@ Place individually licensed, commissioned, or original transparent PNG artwork i
 - Final card shows the matched EB member's name only; their portfolio/department is not printed on the card.
 - Reworked the 20 question prompts into comic/multiverse scenarios and refreshed the visual styling.
 - Added an independent Spider-Verse identity result before EB resonance, five-step result navigation, answer-based character stats, and a collectible card download.
+- Added Alan Pramod to EB resonance and linked `yuva.jpeg` to Yuvaanesh P.
