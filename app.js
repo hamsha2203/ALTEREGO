@@ -91,10 +91,20 @@ const ini=n=>n.split(' ').map(x=>x[0]).join('').slice(0,2).toUpperCase();
 const av=m=>`<div class="av"><span>${ini(m.name)}</span><img src="assets/eb/${m.photo||m.id+'.jpg'}" onerror="this.remove()"></div>`;
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 async function dl(){
-  const status=$("#download-status"),cardElement=$("#card");
-  if(!window.html2canvas){status.textContent="Card export is unavailable because the image renderer did not load.";return}
+  const status=$("#download-status"),cardElement=$("#card"),button=document.querySelector('.card-result .btn');
+  if(!cardElement||!status)return;
+  if(button){button.disabled=true;button.textContent="PREPARING YOUR CARD…"}
   status.textContent="Preparing your high-resolution character card…";
   try{
+    if(!window.html2canvas){
+      for(const src of [
+        "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js",
+        "https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"
+      ]){
+        try{await new Promise((resolve,reject)=>{const script=document.createElement("script");script.src=src;script.onload=resolve;script.onerror=()=>reject(new Error("Image renderer failed to load"));document.head.appendChild(script)});if(window.html2canvas)break}catch{}
+      }
+    }
+    if(!window.html2canvas)throw new Error("Card renderer is unavailable");
     await document.fonts.ready;
     await Promise.all([...cardElement.querySelectorAll("img")].map(image=>{
       if(image.complete)return image.naturalWidth?Promise.resolve():Promise.reject(new Error(`Image failed to load: ${image.alt||image.src}`));
@@ -118,9 +128,12 @@ async function dl(){
         exportCard.style.boxSizing="border-box";
       }
     });
-    const link=document.createElement("a");link.download=`alterego-${R.universeCode}.png`;link.href=canvas.toDataURL("image/png");link.click();
+    const blob=await new Promise(resolve=>canvas.toBlob(resolve,"image/png"));
+    if(!blob)throw new Error("Could not create the card image");
+    const url=URL.createObjectURL(blob),link=document.createElement("a");link.download=`alterego-${R.universeCode}.png`;link.href=url;document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
     status.textContent="Your character card is ready to share.";
-  }catch(error){console.error("Character card export failed:",error);status.textContent="Could not create the card image. Check that the selected photos and local artwork load, then try again."}
+  }catch(error){console.error("Character card export failed:",error);status.textContent="Could not download the card. Check your connection and try again."}
+  finally{if(button){button.disabled=false;button.textContent="DOWNLOAD YOUR CHARACTER CARD"}}
 }
 landing();
 landing();
