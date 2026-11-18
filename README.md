@@ -7,7 +7,7 @@ Participant uploads accept JPG, PNG, or WEBP up to 10 MB and remain in the brows
 
 ## Independent scoring engines
 - **A · EB resonance**: answers → 8 dims (A,P,C,E,S,I,D,M) scaled 0-10 → centered cosine vs all six `EB[].v` profiles, then scores are normalized across the six profiles so one or two shared-baseline profiles do not dominate. Uses NO department data. The available profiles and their data are shown with the full ranking; raw ACE response files are not included in this repository.
-- **B · Department**: answers → 6 JD competencies (S,L,D,K,O,R) → cosine vs `DEPT[].v` (from JD booklets), then scores are normalized across all five departments to make relative fit clear. Uses NO EB data. The participant's selected department is always the primary result and receives the highest displayed score; other departments follow in answer-match order.
+- **B · Department**: answers → 6 JD competencies (S,L,D,K,O,R) → cosine vs `DEPT[].v` (from JD booklets), then scores are distributed across all five departments as percentages summing to 100. A modest prior boosts the participant's selected department while answers still determine the fit and rankings.
 - **C · Archetype**: tally of C/A/N/V/W per answer.
 - **D · Spider-Verse identity**: independent profile weights in `spiderverse.js`, based on the selected answer's existing EB-dimension and archetype signals. Does not change the question set or other scores.
 Each option in `Q` = `text|EBdims|DEPTdims|ARCH` — separate mappings per engine.

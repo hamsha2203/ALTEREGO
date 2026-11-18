@@ -26,13 +26,17 @@ const lowEB=Math.min(...rawEB.map(x=>x.raw)),highEB=Math.max(...rawEB.map(x=>x.r
 const eb=rawEB.map(({m,raw})=>({m,s:Math.round(highEB===lowEB?50:((raw-lowEB)/(highEB-lowEB))*100)})).sort((x,y)=>y.s-x.s);
 // Engine B: dept alignment (JD profiles only)
 const rawDP=Object.entries(DEPT).map(([k,v])=>{const K=Object.keys(d),dot=K.reduce((s,x)=>s+d[x]*(v.v[x]||0),0),n=Math.sqrt(K.reduce((s,x)=>s+d[x]**2,0)*K.reduce((s,x)=>s+(v.v[x]||0)**2,0)),raw=n?dot/n:0;return{k,raw}});
-const lowDP=Math.min(...rawDP.map(x=>x.raw)),highDP=Math.max(...rawDP.map(x=>x.raw));
-const rankedDP=rawDP.map(({k,raw})=>({k,s:Math.round(highDP===lowDP?50:((raw-lowDP)/(highDP-lowDP))*100)})).sort((x,y)=>y.s-x.s);
-// The participant's selected department is the primary alignment. Preserve
-// answer-based scores for the other departments, but make the selected one
-// visibly highest so it cannot appear as a low or zero-priority result.
-const selectedDP=rankedDP.find(x=>x.k===st.dept),otherDP=rankedDP.filter(x=>x.k!==st.dept);
-const dp=selectedDP?[{...selectedDP,s:Math.max(selectedDP.s,...otherDP.map(x=>x.s))+1},...otherDP]:rankedDP;
+// Turn relative fit into a shared 100-point distribution. A small prior gives
+// the participant's chosen department extra weight without overriding answers.
+const maxDeptRaw=Math.max(...rawDP.map(x=>x.raw));
+const weightedDP=rawDP.map(({k,raw})=>({k,w:Math.exp((raw-maxDeptRaw)*5)*(k===st.dept?1.2:1)}));
+const totalDeptWeight=weightedDP.reduce((sum,x)=>sum+x.w,0);
+const deptShares=weightedDP.map(({k,w})=>({k,exact:w/totalDeptWeight*100,s:Math.floor(w/totalDeptWeight*100)}));
+let remainingDeptPoints=100-deptShares.reduce((sum,x)=>sum+x.s,0);
+deptShares.sort((a,b)=>(b.exact-b.s)-(a.exact-a.s));
+for(let i=0;i<remainingDeptPoints;i++)deptShares[i].s++;
+const deptByScore=[...deptShares].sort((a,b)=>b.s-a.s);
+const dp=[...deptByScore.filter(x=>x.k===st.dept),...deptByScore.filter(x=>x.k!==st.dept)];
 // Engine C: archetype (ties -> first answered pattern order)
 const ar=Object.entries(a).sort((x,y)=>y[1]-x[1]);return{e,d,eb,dp,ar}}
 function decode(){show(`<div class="portal spin"></div><h2 class="glitch" data-t="DECODING…">DECODING…</h2><p class="tag">Crossing dimensions to find your ALTEREGO</p>`);setTimeout(reveal,2200)}
