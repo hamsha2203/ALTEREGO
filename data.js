@@ -27,7 +27,7 @@ const EB=[
 {id:"yuvaanesh",photo:"yuva.jpeg",name:"Yuvaanesh P",port:"Marketing (MKT)",v:{A:7,P:4,C:7,E:5,S:8,I:6,D:4,M:7},tags:"composed, plan-first, storyteller, structure-minded"},
 {id:"tejhesh",photo:"DJ.jpeg",name:"Tejhesh DJ",port:"Outgoing Global Talent (oGTa)",v:{A:7,P:8,C:4,E:6,S:6,I:7,D:6,M:7},tags:"visionary, people-growth, listens first, big-picture"},
 {id:"nandkishan",photo:"kishan.jpeg",name:"Nandkishan",port:"Business Development (BD)",v:{A:5,P:9,C:3,E:6,S:7,I:4,D:5,M:8},tags:"empathetic, thoughtful, connector, calculated risk-taker"},
-{id:"alan-pramod",name:"Alan Pramod",port:"SUP",v:{A:8,P:8,C:9,E:8,S:6,I:9,D:8,M:8},tags:"idea-rich, takes ownership, action-oriented, people-aware"}];
+{id:"alan-pramod",photo:"alan.png",name:"Alan Pramod",port:"SUP",v:{A:8,P:8,C:9,E:8,S:6,I:9,D:8,M:8},tags:"idea-rich, takes ownership, action-oriented, people-aware"}];
 // profiles derived from the JD booklet (0-10 weight per competency)
 const DEPT={
 PM:{n:"People Management",v:{L:9,D:8,R:6,O:5,K:4,S:2},why:"growing people, reading data and coaching teams through their journey"},

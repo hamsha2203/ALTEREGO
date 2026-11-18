@@ -2,7 +2,7 @@
 Static app (no build). Run: `npx serve .` (don't open via file://) · Deploy: drag folder to Vercel/Netlify.
 
 ## EB photos and participant photo
-The current photos in `assets/eb/` are `hamsha.jpeg`, `munna.jpeg`, `DJ.jpeg`, `kishan.jpeg`, and `yuva.jpeg` (Yuvaanesh P). Alan Pramod currently has no photo, so initials show for that profile.
+The current photos in `assets/eb/` are `hamsha.jpeg`, `munna.jpeg`, `DJ.jpeg`, `kishan.jpeg`, `yuva.jpeg` (Yuvaanesh P), and `alan.png` (Alan Pramod).
 Participant uploads accept JPG, PNG, or WEBP up to 10 MB and remain in the browser.
 
 ## Independent scoring engines
